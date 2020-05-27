@@ -9,7 +9,7 @@ import api from '../../services/api';
 
 import * as TokenAction from '../../store/modules/token/actions';
 
-function SignIn() {
+function SignIn({ history }) {
   const dispatch = useDispatch();
 
   async function handleSubmit(data) {
@@ -19,6 +19,7 @@ function SignIn() {
         console.log(userData.data);
         const { token } = userData.data;
         dispatch(TokenAction.setTokenRequest(token));
+        history.push('/dashboard');
       });
     } catch (error) {
       console.log(error);
