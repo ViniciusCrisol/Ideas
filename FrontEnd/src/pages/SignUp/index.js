@@ -5,28 +5,29 @@ import { Link } from 'react-router-dom';
 
 import { Container } from '../../components/FormStyle';
 
-import { signInRequest } from '../../store/modules/auth/actions';
+import { signUpRequest } from '../../store/modules/auth/actions';
 
-function SignIn() {
+function SignUp() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.auth.loading);
 
-  function handleSubmit({ email, password }) {
-    dispatch(signInRequest(email, password));
+  function handleSubmit({ name, email, password }) {
+    dispatch(signUpRequest(name, email, password));
   }
 
   return (
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
+          <Input type="name" name="name" placeholder="Name" />
           <Input type="email" name="email" placeholder="E-mail" />
           <Input type="password" name="password" placeholder="Password" />
           <button type="submit">{loading ? 'Loading...' : 'Submit'}</button>
-          <Link to="/sign-up">Create a account</Link>
+          <Link to="/sign-in">Already have an account ?</Link>
         </Form>
       </Container>
     </>
   );
 }
 
-export default SignIn;
+export default SignUp;

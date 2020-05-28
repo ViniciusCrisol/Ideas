@@ -5,7 +5,9 @@ import { Container, ProductContainer } from './styles';
 
 import api from '../../services/api';
 
-function Home({ history }) {
+import history from '../../services/history';
+
+function Home() {
   const [ideas, setIdeas] = useState([]);
 
   function handleNavigate(id) {

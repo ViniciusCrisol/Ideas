@@ -18,6 +18,18 @@ class UserController {
 
     return res.json(response);
   }
+
+  async show(req, res) {
+    const { email } = req.params;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ error: 'User does not exists' });
+    }
+
+    return res.json(user);
+  }
 }
 
 export default new UserController();

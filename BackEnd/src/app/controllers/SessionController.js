@@ -16,10 +16,14 @@ class SessionController {
 
     await bcrypt.compare(password, user.password_hash);
 
-    const id = user._id;
+    const { name, _id: id } = user;
 
     return res.json({
-      email,
+      user: {
+        id,
+        name,
+        email,
+      },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),

@@ -1,12 +1,16 @@
 import React from 'react';
-import { FcIdea } from 'react-icons/fc';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { Form, Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
+import { FcIdea } from 'react-icons/fc';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 import { Container } from './styles';
 
+import { store } from '../../store';
+
 function Header() {
+  const { signed } = store.getState().auth;
+
   return (
     <Container>
       <div>
@@ -21,7 +25,7 @@ function Header() {
           </button>
         </Form>
         <div>
-          <Link to="/sign-in">Profile</Link>
+          <Link to={signed ? '/dashboard' : '/sign-in'}>profile</Link>
         </div>
       </div>
     </Container>
