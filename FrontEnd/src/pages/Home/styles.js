@@ -7,69 +7,124 @@ export const Container = styled.div`
 `;
 
 export const ProductContainer = styled.button`
-  position: relative;
-
-  max-width: 300px;
+  max-width: 270px;
   width: 90%;
-  min-height: 180px;
+  min-height: 120px;
   height: auto;
 
   border: 0;
+  margin: 8px;
+  padding: 14px;
+
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.25) 1px 0px 10px -2px;
-  margin: 8px 6px;
-  padding: 32px;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.25) 1px 0px 10px -2px;
 
-  text-decoration: none;
   text-align: left;
-
-  section {
-    text-transform: uppercase;
-
-    display: flex;
-    p {
-      background-color: #f2bc79;
-      margin: 0 6px;
-      padding: 4px 10px;
-      border-radius: 20px;
-
-      &:first-child {
-        margin: 0;
-      }
-    }
-  }
+  text-overflow: ellipsis;
 
   h1 {
-    padding-top: 8px;
-    margin-top: 8px;
-
-    border-top: 1px solid #eee;
-
     font-size: 22px;
   }
 
-  > p {
+  p {
     margin-top: 8px;
 
     font-size: 15px;
-    line-height: 1;
-    color: rgb(102, 102, 102);
+    color: #bbb;
+  }
+`;
+
+export const Modal = styled.div`
+  z-index: 10;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  > div {
+    position: relative;
+
+    width: 90%;
+    max-width: 700px;
+    height: 80%;
+
+    margin: 64px auto 0;
+    background-color: white;
+    border-radius: 4px;
 
     overflow: hidden;
-    text-overflow: ellipsis;
+
+    button {
+      width: 50px;
+      height: 50px;
+
+      background-color: #d74f6b;
+      border: 0;
+
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    header {
+      padding: 5px 22px;
+      height: 60px;
+
+      display: flex;
+      align-items: center;
+
+      img {
+        border-radius: 50%;
+      }
+
+      > div {
+        margin-left: 12px;
+
+        p {
+          color: #bbb;
+        }
+      }
+    }
+  }
+`;
+
+export const ModalContent = styled.div`
+  padding: 32px 32px 0;
+
+  h1 {
+    font-size: 22px;
+    text-transform: uppercase;
   }
 
-  div {
-    position: absolute;
-    left: 0px;
-    top: 0px;
+  strong {
+    color: #bbb;
+    font-size: 14px;
+    font-weight: 400;
+  }
 
-    width: 8px;
-    height: 100%;
+  p {
+    font-size: 15px;
+    margin-top: 18px;
 
-    z-index: 2;
-    background-color: #f2bc79;
+    max-width: 80%;
+  }
+`;
+
+export const LoadingContainer = styled.div`
+  text-align: center;
+  color: #bbb;
+
+  h1 {
+    margin: 64px 0 12px;
+
+    text-transform: uppercase;
+    font-size: 20px;
   }
 `;

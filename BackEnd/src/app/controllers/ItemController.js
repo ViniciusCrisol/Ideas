@@ -1,4 +1,7 @@
 import Item from '../models/Item';
+import User from '../models/User';
+
+import { format } from 'date-fns';
 
 class ItemController {
   async store(req, res) {
@@ -47,7 +50,7 @@ class ItemController {
   async delete(req, res) {
     const { id } = req.params;
 
-    const ideaExists = Item.findById({ id });
+    const ideaExists = await Item.findById(id);
 
     if (!ideaExists) {
       return res.json({ error: 'Idea does not exists' });
@@ -56,6 +59,32 @@ class ItemController {
     await Item.findOneAndRemove(id);
 
     return res.json({ ok: true });
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const idea = await Item.findById(id);
+
+    if (!idea) {
+      return res.json({ error: 'Idea does not exists' });
+    }
+
+    const user = await User.findById(idea.userId);
+
+    const response = {
+      userId: user._id,
+      userName: user.name,
+      userEmail: user.email,
+
+      ideaCategory: idea.category,
+      ideaTitle: idea.title,
+      ideaShortDescription: idea.shortDescription,
+      ideaDescription: idea.description,
+      ideaCreateDate: format(idea.createdAt, 'yyyy/MM/dd'),
+    };
+
+    return res.json(response);
   }
 }
 
