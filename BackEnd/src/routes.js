@@ -17,6 +17,8 @@ routes.get('/idea/index', ItemController.index);
 
 routes.use(authMiddleware);
 
+routes.get('/user/show-ideas/:id', UserController.show);
+
 routes.put('/idea/update/:id', ItemController.update);
 routes.delete('/idea/delete/:id', ItemController.delete);
 routes.post('/idea/create/:id', ItemController.store);

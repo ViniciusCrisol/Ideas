@@ -3,7 +3,12 @@ import { toast } from 'react-toastify';
 
 import api from '../../../services/api';
 
-import { loadIdeaSuccess, loadIdeaFailure } from './actions';
+import {
+  loadIdeaSuccess,
+  loadIdeaFailure,
+  createIdeaSuccess,
+  createIdeaFailure,
+} from './actions';
 
 export function* loadIdeas({ payload }) {
   try {
@@ -41,4 +46,28 @@ export function* loadIdeas({ payload }) {
   }
 }
 
-export default all([takeLatest('@idea/LOAD_IDEA_REQUEST', loadIdeas)]);
+export function* createIdeas({ payload }) {
+  try {
+    const { id, title, description, shortDescription, category } = payload;
+
+    yield call(api.post, `/idea/create/${id}`, {
+      title,
+      description,
+      shortDescription,
+      category,
+    });
+
+    toast.success('Idea created =)');
+
+    yield put(createIdeaSuccess());
+  } catch (err) {
+    toast.error('Create idea failure');
+
+    yield put(createIdeaFailure());
+  }
+}
+
+export default all([
+  takeLatest('@idea/LOAD_IDEA_REQUEST', loadIdeas),
+  takeLatest('@idea/CREATE_IDEA_REQUEST', createIdeas),
+]);

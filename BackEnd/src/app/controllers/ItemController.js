@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 import Item from '../models/Item';
 import User from '../models/User';
 
@@ -5,6 +7,17 @@ import { format } from 'date-fns';
 
 class ItemController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      title: Yup.string().required(),
+      description: Yup.string().required(),
+      shortDescription: Yup.string().required(),
+      category: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { id: userId } = req.params;
     const { title, description, shortDescription, category } = req.body;
 

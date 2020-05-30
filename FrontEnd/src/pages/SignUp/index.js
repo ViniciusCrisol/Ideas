@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
 
-import { Container } from '../../components/FormStyle';
+import { Container } from '../../components/_StyledComponents';
 
 import { signUpRequest } from '../../store/modules/auth/actions';
 

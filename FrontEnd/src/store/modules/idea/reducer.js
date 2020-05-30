@@ -30,7 +30,7 @@ export default function idea(state = INITIAL_STATE, action) {
         draft.ideaShortDescription = action.payload.ideaShortDescription;
         draft.ideaDescription = action.payload.ideaDescription;
         draft.ideaCreateDate = action.payload.ideaCreateDate;
-        draft.loading = true;
+        draft.loading = false;
         break;
       }
 

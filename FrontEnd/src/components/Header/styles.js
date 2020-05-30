@@ -95,24 +95,4 @@ export const Container = styled.div`
       }
     }
   }
-
-  > button {
-    width: 120px;
-    height: 40px;
-
-    border: 0;
-    border-radius: 4px;
-    background-color: #d97e4a;
-
-    font-size: 13px;
-    color: white;
-    font-weight: 500;
-    text-transform: uppercase;
-
-    transition: 200ms;
-
-    &:hover {
-      background-color: ${darken(0.06, '#d97e4a')};
-    }
-  }
 `;

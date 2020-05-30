@@ -1,9 +1,21 @@
 import bcrypt from 'bcryptjs';
+import * as Yup from 'yup';
 
 import User from '../models/User';
+import Item from '../models/Item';
 
 class UserController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+      password: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { name, email, password } = req.body;
 
     const userExists = await User.findOne({ email });
@@ -20,15 +32,15 @@ class UserController {
   }
 
   async show(req, res) {
-    const { email } = req.params;
+    const { userId } = req.params;
 
-    const user = await User.findOne({ email });
+    const idea = await Item.find(userId);
 
-    if (!user) {
+    if (!idea) {
       return res.status(400).json({ error: 'User does not exists' });
     }
 
-    return res.json(user);
+    return res.json(idea);
   }
 }
 

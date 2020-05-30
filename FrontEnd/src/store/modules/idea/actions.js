@@ -35,3 +35,28 @@ export function loadIdeaSuccess({
     },
   };
 }
+
+export function createIdea({
+  id,
+  title,
+  description,
+  shortDescription,
+  category,
+}) {
+  return {
+    type: '@idea/CREATE_IDEA_REQUEST',
+    payload: { id, title, description, shortDescription, category },
+  };
+}
+
+export function createIdeaFailure() {
+  return {
+    type: '@idea/CREATE_IDEA_FAILURE',
+  };
+}
+
+export function createIdeaSuccess() {
+  return {
+    type: '@idea/CREATE_IDEA_SUCCESS',
+  };
+}

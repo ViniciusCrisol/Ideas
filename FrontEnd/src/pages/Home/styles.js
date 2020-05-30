@@ -6,36 +6,6 @@ export const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-export const ProductContainer = styled.button`
-  max-width: 270px;
-  width: 90%;
-  min-height: 120px;
-  height: auto;
-
-  border: 0;
-  margin: 8px;
-  padding: 14px;
-
-  background-color: white;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: rgba(0, 0, 0, 0.25) 1px 0px 10px -2px;
-
-  text-align: left;
-  text-overflow: ellipsis;
-
-  h1 {
-    font-size: 22px;
-  }
-
-  p {
-    margin-top: 8px;
-
-    font-size: 15px;
-    color: #bbb;
-  }
-`;
-
 export const Modal = styled.div`
   z-index: 10;
 
@@ -53,7 +23,7 @@ export const Modal = styled.div`
 
     width: 90%;
     max-width: 700px;
-    height: 80%;
+    height: 60%;
 
     margin: 64px auto 0;
     background-color: white;
@@ -74,8 +44,8 @@ export const Modal = styled.div`
     }
 
     header {
-      padding: 5px 22px;
-      height: 60px;
+      padding: 8px 22px;
+      height: 80px;
 
       display: flex;
       align-items: center;
@@ -114,17 +84,5 @@ export const ModalContent = styled.div`
     margin-top: 18px;
 
     max-width: 80%;
-  }
-`;
-
-export const LoadingContainer = styled.div`
-  text-align: center;
-  color: #bbb;
-
-  h1 {
-    margin: 64px 0 12px;
-
-    text-transform: uppercase;
-    font-size: 20px;
   }
 `;

@@ -13,7 +13,8 @@
     "date-fns": "^2.14.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.16"
+    "mongoose": "^5.9.16",
+    "yup": "^0.29.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4",

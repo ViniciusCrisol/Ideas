@@ -1,26 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
-import { IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
+import { IoMdClose } from 'react-icons/io';
 
-import {
-  Container,
-  ProductContainer,
-  Modal,
-  ModalContent,
-  LoadingContainer,
-} from './styles';
+import { Container, ModalContent, Modal } from './styles';
+import { ProductContainer } from '../../components/_StyledComponents';
 
 import { loadIdea } from '../../store/modules/idea/actions';
-
 import api from '../../services/api';
 
 function Home() {
+  const lookIdea = useSelector((state) => state.idea);
   const dispatch = useDispatch();
+
   const [ideas, setIdeas] = useState([]);
   const [modal, setModal] = useState(false);
-
-  const lookIdea = useSelector((state) => state.idea);
 
   function handleSubmit(id) {
     dispatch(loadIdea(id));
@@ -42,12 +36,12 @@ function Home() {
     <>
       {modal && (
         <Modal>
-          <div>
-            {lookIdea.loading ? (
+          {!lookIdea.loading && (
+            <div>
               <>
                 <header>
                   <img
-                    src="https://api.adorable.io/avatars/50/adorable.png"
+                    src="https://api.adorable.io/avatars/57/@adorable"
                     alt="AdorableIcon"
                   />
                   <div>
@@ -65,16 +59,8 @@ function Home() {
                   <p>{lookIdea.ideaDescription}</p>
                 </ModalContent>
               </>
-            ) : (
-              <LoadingContainer>
-                <button type="button" onClick={() => setModal(false)}>
-                  <IoMdClose color="white" size={26} />
-                </button>
-                <h1>The content is loading...</h1>
-                <strong>sorry about that =(</strong>
-              </LoadingContainer>
-            )}
-          </div>
+            </div>
+          )}
         </Modal>
       )}
 
