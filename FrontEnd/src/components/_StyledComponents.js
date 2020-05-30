@@ -81,6 +81,7 @@ export const Modal = styled.div`
 
     width: 90%;
     max-width: 700px;
+    min-height: 400px;
 
     margin: 64px auto 0;
     padding: 64px 0;
@@ -104,6 +105,54 @@ export const Modal = styled.div`
       position: absolute;
       right: 0;
       top: 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      margin-top: 32px;
+      min-width: 400px;
+
+      strong {
+        color: #bbb;
+      }
+
+      input {
+        width: 100%;
+        height: 40px;
+
+        margin: 6px auto;
+        padding: 6px;
+
+        background-color: transparent;
+        border: 1px solid #eee;
+      }
+
+      textarea {
+        width: 100%;
+        height: 120px;
+
+        padding: 6px;
+        margin: 6px auto;
+        border: 1px solid #eee;
+
+        resize: none;
+      }
+
+      button {
+        height: 40px;
+        background-color: #d97e4a;
+
+        border: 0;
+        border-radius: 4px;
+
+        transition: 200ms;
+
+        &:hover {
+          background-color: ${darken(0.06, '#d97e4a')};
+        }
+      }
     }
   }
 `;

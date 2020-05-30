@@ -5,16 +5,26 @@ import { IoMdClose } from 'react-icons/io';
 
 import { Container, Modal, ModalContent } from '../../components/_StyledHome';
 import { ProductContainer } from '../../components/_StyledComponents';
+import { Wrapper, FailContainer } from './styles';
 
 import { loadIdea } from '../../store/modules/idea/actions';
+
 import api from '../../services/api';
 
-function Home() {
+function Search({ match }) {
+  const { search } = match.params;
+
   const lookIdea = useSelector((state) => state.idea);
   const dispatch = useDispatch();
 
   const [ideas, setIdeas] = useState([]);
   const [modal, setModal] = useState(false);
+
+  async function getItens() {
+    const response = await api.get(`/idea/search/${search}`);
+
+    setIdeas(response.data);
+  }
 
   function handleSubmit(id) {
     dispatch(loadIdea(id));
@@ -22,15 +32,9 @@ function Home() {
     setModal(true);
   }
 
-  async function getIdeas() {
-    const response = await api.get('/idea/index');
-
-    setIdeas(response.data);
-  }
-
   useEffect(() => {
-    getIdeas();
-  }, []);
+    getItens();
+  }, [ideas]);
 
   return (
     <>
@@ -64,19 +68,36 @@ function Home() {
         </Modal>
       )}
 
-      <Container>
-        {ideas.map((idea) => (
-          <ProductContainer
-            key={idea._id}
-            onClick={() => handleSubmit(idea._id)}
-          >
-            <h1>{idea.title}</h1>
-            <p>{idea.shortDescription}</p>
-          </ProductContainer>
-        ))}
-      </Container>
+      <Wrapper>
+        <>
+          {ideas.length > 0 ? (
+            <>
+              <p>
+                Search by <strong>{search}</strong>
+              </p>
+              <Container>
+                <section>
+                  {ideas.map((idea) => (
+                    <ProductContainer
+                      key={idea._id}
+                      onClick={() => handleSubmit(idea._id)}
+                    >
+                      <h1>{idea.title}</h1>
+                      <p>{idea.shortDescription}</p>
+                    </ProductContainer>
+                  ))}
+                </section>
+              </Container>
+            </>
+          ) : (
+            <FailContainer>
+              <h1>Nothig found =(</h1>
+            </FailContainer>
+          )}
+        </>
+      </Wrapper>
     </>
   );
 }
 
-export default Home;
+export default Search;

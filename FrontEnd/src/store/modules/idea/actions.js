@@ -55,8 +55,16 @@ export function createIdeaFailure() {
   };
 }
 
-export function createIdeaSuccess() {
+export function editIdea({ id, title, description, shortDescription }) {
   return {
-    type: '@idea/CREATE_IDEA_SUCCESS',
+    type: '@idea/EDIT_IDEA_REQUEST',
+    payload: { id, title, description, shortDescription },
+  };
+}
+
+export function deleteIdea(id) {
+  return {
+    type: '@idea/DELETE_IDEA_REQUEST',
+    payload: { id },
   };
 }

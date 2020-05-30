@@ -8,8 +8,14 @@ import { Container } from './styles';
 
 import { store } from '../../store';
 
+import history from '../../services/history';
+
 function Header() {
   const { signed } = store.getState().auth;
+
+  function handleSumit({ search }) {
+    history.push(`/search/${search}`);
+  }
 
   return (
     <Container>
@@ -18,7 +24,7 @@ function Header() {
           <FcIdea size={26} />
         </Link>
 
-        <Form>
+        <Form onSubmit={handleSumit}>
           <Input name="search" placeholder="Search for tags" />
           <button type="submit">
             <AiOutlineSearch size={22} color="white" />

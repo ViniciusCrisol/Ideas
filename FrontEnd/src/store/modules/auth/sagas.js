@@ -38,7 +38,7 @@ export function* signUp({ payload }) {
     });
 
     history.push('/sign-in');
-  } catch (err) {
+  } catch (error) {
     toast.error('Registration failure !');
 
     yield put(signFailure());

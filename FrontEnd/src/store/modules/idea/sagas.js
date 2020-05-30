@@ -3,14 +3,9 @@ import { toast } from 'react-toastify';
 
 import api from '../../../services/api';
 
-import {
-  loadIdeaSuccess,
-  loadIdeaFailure,
-  createIdeaSuccess,
-  createIdeaFailure,
-} from './actions';
+import { loadIdeaSuccess, loadIdeaFailure, createIdeaFailure } from './actions';
 
-export function* loadIdeas({ payload }) {
+export function* loadIdea({ payload }) {
   try {
     const { id } = payload;
 
@@ -39,35 +34,67 @@ export function* loadIdeas({ payload }) {
         ideaCreateDate,
       })
     );
-  } catch (err) {
+  } catch (error) {
     toast.error('Load failure');
 
     yield put(loadIdeaFailure());
   }
 }
 
-export function* createIdeas({ payload }) {
+export function* createIdea({ payload }) {
   try {
     const { id, title, description, shortDescription, category } = payload;
 
-    yield call(api.post, `/idea/create/${id}`, {
+    const response = yield call(api.post, `/idea/create/${id}`, {
       title,
       description,
       shortDescription,
       category,
     });
 
-    toast.success('Idea created =)');
-
-    yield put(createIdeaSuccess());
-  } catch (err) {
+    if (response.data.error) {
+      toast.error(response.data.error);
+    } else {
+      toast.success('Idea created =)');
+    }
+  } catch (error) {
     toast.error('Create idea failure');
 
     yield put(createIdeaFailure());
   }
 }
 
+export function* editIdea({ payload }) {
+  try {
+    const { id, title, description, shortDescription } = payload;
+
+    yield call(api.put, `/idea/update/${id}`, {
+      title,
+      description,
+      shortDescription,
+    });
+  } catch (error) {
+    toast.error('Edit idea failure');
+  }
+}
+
+export function* deleteIdea({ payload }) {
+  try {
+    const { id } = payload;
+
+    const response = yield call(api.delete, `/idea/delete/${id}`);
+
+    if (response.data.error) {
+      toast.error(response.data.error);
+    }
+  } catch (error) {
+    toast.error('Delete idea failure');
+  }
+}
+
 export default all([
-  takeLatest('@idea/LOAD_IDEA_REQUEST', loadIdeas),
-  takeLatest('@idea/CREATE_IDEA_REQUEST', createIdeas),
+  takeLatest('@idea/LOAD_IDEA_REQUEST', loadIdea),
+  takeLatest('@idea/CREATE_IDEA_REQUEST', createIdea),
+  takeLatest('@idea/DELETE_IDEA_REQUEST', deleteIdea),
+  takeLatest('@idea/EDIT_IDEA_REQUEST', editIdea),
 ]);

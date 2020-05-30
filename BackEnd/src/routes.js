@@ -3,10 +3,12 @@ import { Router } from 'express';
 import ItemController from './app/controllers/ItemController';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import SearchController from './app/controllers/SearchController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+routes.get('/idea/search/:search', SearchController.show);
 
 routes.post('/user/create', UserController.store);
 

@@ -12,22 +12,57 @@ import {
   Modal,
 } from '../../components/_StyledComponents';
 
-import { createIdea } from '../../store/modules/idea/actions';
+import {
+  createIdea,
+  deleteIdea,
+  editIdea,
+  loadIdea,
+} from '../../store/modules/idea/actions';
 import api from '../../services/api';
 
 function Dashborad() {
   const user = useSelector((state) => state.user.profile);
+  const lookIdea = useSelector((state) => state.idea);
   const dispatch = useDispatch();
 
+  const [idIdeia, setIdIdea] = useState('');
   const [modal, setModal] = useState(false);
+  const [modalEditIdea, setModalEditIdea] = useState(false);
+
   const [ideas, setIdeas] = useState([]);
 
-  function handleSubmit({ title, description, shortDescription, category }) {
+  function handleCreate({ title, description, shortDescription, category }) {
     const { id } = user;
 
     dispatch(
       createIdea({ id, title, description, shortDescription, category })
     );
+  }
+
+  function handleEdit({ title, description, shortDescription }) {
+    dispatch(
+      editIdea({
+        id: idIdeia,
+        title,
+        description,
+        shortDescription,
+      })
+    );
+
+    setModalEditIdea(false);
+  }
+
+  function editModal(id) {
+    setIdIdea(id);
+
+    dispatch(loadIdea(id));
+
+    setModalEditIdea(true);
+  }
+
+  function closeModal() {
+    setModalEditIdea(false);
+    setModal(false);
   }
 
   useEffect(() => {
@@ -36,7 +71,7 @@ function Dashborad() {
     response.then((ideaData) => {
       setIdeas(ideaData.data);
     });
-  }, [modal]);
+  }, [ideas]);
 
   return (
     <>
@@ -44,24 +79,51 @@ function Dashborad() {
         <Modal>
           {!ideas.loading && (
             <div>
-              <button type="button" onClick={() => setModal(false)}>
+              <button type="button" onClick={() => closeModal()}>
                 <IoMdClose color="white" size={26} />
               </button>
-              {ideas.map((idea) => (
-                <ProductContainer key={idea._id}>
-                  <h1>{idea.title}</h1>
-                  <p>{idea.shortDescription}</p>
-                  <section>
-                    <button type="button">
-                      <IoMdTrash color="white" size={20} />
-                    </button>
+              {modalEditIdea ? (
+                <Form
+                  onSubmit={handleEdit}
+                  initialData={{
+                    shortDescription: lookIdea.ideaShortDescription,
+                    title: lookIdea.ideaTitle,
+                    description: lookIdea.ideaDescription,
+                  }}
+                >
+                  <strong>Edit</strong>
+                  <Input type="text" name="title" />
+                  <Input multiline name="shortDescription" />
+                  <Input multiline name="description" />
+                  <button type="submit">
+                    <IoMdCreate size={22} color="white" />
+                  </button>
+                </Form>
+              ) : (
+                <>
+                  {ideas.map((idea) => (
+                    <ProductContainer key={idea._id}>
+                      <h1>{idea.title}</h1>
+                      <p>{idea.shortDescription}</p>
+                      <section>
+                        <button
+                          type="button"
+                          onClick={() => dispatch(deleteIdea(idea._id))}
+                        >
+                          <IoMdTrash color="white" size={20} />
+                        </button>
 
-                    <button type="button">
-                      <AiOutlineEdit color="white" size={20} />
-                    </button>
-                  </section>
-                </ProductContainer>
-              ))}
+                        <button
+                          type="button"
+                          onClick={() => editModal(idea._id)}
+                        >
+                          <AiOutlineEdit color="white" size={20} />
+                        </button>
+                      </section>
+                    </ProductContainer>
+                  ))}
+                </>
+              )}
             </div>
           )}
         </Modal>
@@ -87,7 +149,7 @@ function Dashborad() {
           </section>
         </div>
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleCreate}>
           <strong>Create a idea</strong>
           <Input type="text" placeholder="Title" name="title" />
           <Input
