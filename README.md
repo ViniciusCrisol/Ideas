@@ -23,5 +23,5 @@
 
 ### Descrição do projeto 🚀
 
-- 📙 Projeto que reune idéias para o desenvolvimento de Software;
+- 📙 Projeto que reúne ideias para o estudo de desenvolvimento de Software;
 - 📚 Projeto desenvolvido para estudar ReactJs & Node.
